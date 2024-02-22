@@ -18,16 +18,38 @@ export const userSlice = createSlice({
                 }
             }
         },
-        logoutUser : (state) => {
+        logoutUser: (state) => {
             return {
                 ...state,
                 user: null,
             }
-        }
+        },
+        addAddress: (state, actions) => {
+            if(actions.payload.location === "" || actions.payload.name) {
+                alert("Preencha todos os campos")
+                return{ ...state }
+            }
 
+            if(state.user === null) {
+                alert("Faça um login  para cadastrar o email")
+                return{ ...state }
+            }
+
+            alert("Dados atualizado")
+            return{
+                ...state,
+                user: {
+                    ...state.user,
+                    address: {
+                        location: actions.payload.location,
+                        number: actions.payload.number,
+                    }
+                }
+            }
+        }
 
     }
 })
 
-export const {createUser, logoutUser} = userSlice.actions
+export const {createUser, logoutUser, addAddress} = userSlice.actions
 export default userSlice.reducer;
