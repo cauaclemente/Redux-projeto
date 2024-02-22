@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user: null
+    user: null,
+    users: [],
+    loading: false,
 }
 
 export const userSlice = createSlice({
@@ -55,10 +57,25 @@ export const userSlice = createSlice({
                     address: null,
                 }
             }
+        },
+        fetchUsers: (state) => {
+            console.log("passou aqui")
+            state.loading = true;
+        },
+        fetchUsersSucces: (state, actions) =>{
+            state.users = actions.payload;
+            state.loading = false
+        },
+        fetchUsersFailure: (state,actions) => {
+            console.log(actions.payload)
+            console.log("caiu na failure")
+            state.loading = false
         }
 
     }
 })
 
-export const {createUser, logoutUser, addAddress, deleteAddress} = userSlice.actions
+export const {createUser, logoutUser, addAddress, deleteAddress, fetchUsers,
+fetchUsersFailure, fetchUsersSucces
+} = userSlice.actions
 export default userSlice.reducer;
